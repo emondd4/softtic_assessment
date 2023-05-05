@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:lottie/lottie.dart';
+import 'package:softtic_assessment/screens/AddProductScreen.dart';
 import 'package:softtic_assessment/screens/controller/homeController.dart';
 import 'package:softtic_assessment/screens/profileScreen.dart';
 import 'package:softtic_assessment/utils/AppColorUtils.dart';
@@ -100,7 +101,9 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          Get.to(() => const AddProductPage());
+        },
         backgroundColor: AppColorUtils.instance.yellow,
         child: const Icon(
           Icons.add,

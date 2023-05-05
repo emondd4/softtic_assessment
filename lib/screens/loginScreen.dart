@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:softtic_assessment/screens/controller/loginController.dart';
 import 'package:softtic_assessment/utils/AppColorUtils.dart';
 

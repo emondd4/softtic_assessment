@@ -8,5 +8,6 @@ class AppImageUtils{
   String homeAnim = "assets/lottie/home.json";
   String shopImage = "assets/images/shop.png";
   String userImage = "assets/images/user.png";
+  String placeholderImage = "assets/images/placeholder.png";
 
 }

@@ -26,7 +26,7 @@ class _ProfilePageState extends State<ProfilePage> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              Container(
+              SizedBox(
                 height: 200,
                 width: MediaQuery.of(context).size.width,
                 child: Stack(
