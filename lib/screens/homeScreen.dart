@@ -6,6 +6,7 @@ import 'package:softtic_assessment/screens/controller/homeController.dart';
 import 'package:softtic_assessment/screens/profileScreen.dart';
 import 'package:softtic_assessment/utils/AppColorUtils.dart';
 import 'package:softtic_assessment/utils/AppImageUitls.dart';
+import 'package:softtic_assessment/utils/app_ui_utils.dart';
 
 import '../utils/app_common_util.dart';
 import '../utils/spacers.dart';
@@ -119,7 +120,7 @@ class _HomePageState extends State<HomePage> {
                 alignment: Alignment.centerRight,
                 child: InkWell(
                   onTap: () {
-
+                    UIUtil.instance.showAlertDialog(context, actionFunction: (){homeDataController.deleteProduct(homeDataController.productList[position].id!);},title: "Alert Dialog",subTitle: "Are You Sure Want to Delete This Product?");
                   },
                     child: Icon(Icons.delete,color: Colors.black,size: 28,)
                 ),

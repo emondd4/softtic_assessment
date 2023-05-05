@@ -1,11 +1,17 @@
 import 'package:dio/dio.dart';
 import 'package:get/get.dart' hide Response;
+import 'package:softtic_assessment/dataModel/DeleteBaseResponse.dart';
 import 'package:softtic_assessment/dataModel/ProductListBaseResponse.dart';
 import 'package:softtic_assessment/network/api_urls.dart';
 import 'package:softtic_assessment/utils/shared_pref_utils.dart';
 
+import '../../network/api_repository.dart';
+import '../../utils/app_common_util.dart';
+import '../../utils/app_ui_utils.dart';
+
 class HomeDataController extends GetxController {
 
+  final ApiRepository _apiRepository = ApiRepository();
   late List<ProductListBaseResponse> productList;
   var isDataLoading = false.obs;
 
@@ -46,6 +52,38 @@ class HomeDataController extends GetxController {
       isDataLoading(false);
     }
 
+  }
+
+  Future deleteProduct(int id) async {
+    var params = {
+      "id":id,
+    };
+
+    CommonUtil.instance.internetCheck().then((value) async {
+      if (value) {
+        UIUtil.instance.showLoading();
+        _apiRepository.deleteProduct(Get.context, params, null,
+            onSuccess: (DeleteBaseResponse? response) async {
+              UIUtil.instance.stopLoading();
+              if (response != null) {
+                getProductsList();
+                Get.back();
+                UIUtil.instance.showToast(Get.context, "Product Deleted");
+              } else {
+                UIUtil.instance.stopLoading();
+                UIUtil.instance.onFailed('Delete Failed');
+              }
+            }, onFailure: (String error) {
+              getProductsList();
+              Get.back();
+              UIUtil.instance.showToast(Get.context, "Product Deleted");
+              UIUtil.instance.stopLoading();
+            });
+      } else {
+        UIUtil.instance.stopLoading();
+        UIUtil.instance.onNoInternet();
+      }
+    });
   }
 
 }

@@ -97,7 +97,7 @@ class UIUtil {
         barrierDismissible: false,
         builder: (context) {
           return AlertDialog(
-            title: (title != null) ? Center(child: FittedBox(child: Text(title))) : null,
+            title: (title != null) ? Align(alignment:Alignment.centerLeft,child: FittedBox(child: Text(title))) : null,
             content: (subTitle != null) ? Row(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
