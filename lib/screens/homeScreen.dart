@@ -72,21 +72,29 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               Obx(() => homeDataController.isDataLoading.value == false
-                  ? GridView.builder(
-                physics: const NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    childAspectRatio: 1 / 1.52
-                ),
-                itemBuilder: (context,position) => productItem(position),
-                itemCount: homeDataController.productList.length,
-              )
-                  : Container(
-                    height: CommonUtil.instance.getScreenHeight(context),
-                  child: Center(child: CircularProgressIndicator(color: AppColorUtils.instance.yellow,))
-              ) 
-              )
+                  ? homeDataController.productList.isNotEmpty
+                      ? GridView.builder(
+                          physics: const NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 2,
+                                  childAspectRatio: 1 / 1.52),
+                          itemBuilder: (context, position) =>
+                              productItem(position),
+                          itemCount: homeDataController.productList.length,
+                        )
+                      : SizedBox(
+                          height: CommonUtil.instance.getScreenHeight(context),
+                          child: Center(
+                              child: Lottie.asset(
+                                  AppImageUtils.instance.emptyAnim)))
+                  : SizedBox(
+                      height: CommonUtil.instance.getScreenHeight(context),
+                      child: Center(
+                          child: CircularProgressIndicator(
+                        color: AppColorUtils.instance.yellow,
+                      ))))
             ],
           ),
         ),
@@ -94,7 +102,7 @@ class _HomePageState extends State<HomePage> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
         backgroundColor: AppColorUtils.instance.yellow,
-        child: Icon(
+        child: const Icon(
           Icons.add,
           color: Colors.black,
         ),
@@ -122,8 +130,11 @@ class _HomePageState extends State<HomePage> {
                   onTap: () {
                     UIUtil.instance.showAlertDialog(context, actionFunction: (){homeDataController.deleteProduct(homeDataController.productList[position].id!);},title: "Alert Dialog",subTitle: "Are You Sure Want to Delete This Product?");
                   },
-                    child: Icon(Icons.delete,color: Colors.black,size: 28,)
-                ),
+                    child: const Icon(
+                      Icons.delete,
+                      color: Colors.black,
+                      size: 28,
+                    )),
               ),
               VSpacer10(),
               Center(child: Image.asset(AppImageUtils.instance.shopImage,height: 128,width: 128,)),
@@ -133,14 +144,14 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   Text(
                     "Stock: ${homeDataController.productList[position].quantity?.quantity.toString()}",
-                    style: TextStyle(
+                    style: const TextStyle(
                         fontSize: 18.0,
                         fontWeight: FontWeight.w600,
                         color: Colors.black),
                   ),
                   Text(
                     "\$ ${homeDataController.productList[position].productPrice?.price.toString()}",
-                    style: TextStyle(
+                    style: const TextStyle(
                         fontSize: 18.0,
                         fontWeight: FontWeight.w600,
                         color: Colors.black),
@@ -149,8 +160,8 @@ class _HomePageState extends State<HomePage> {
               ),
               VSpacer10(),
               Text(
-                "${homeDataController.productList[position].name.toString()}",
-                style: TextStyle(
+                homeDataController.productList[position].name.toString(),
+                style: const TextStyle(
                     fontSize: 18.0,
                     fontWeight: FontWeight.w600,
                     color: Colors.black),
@@ -158,15 +169,15 @@ class _HomePageState extends State<HomePage> {
               VSpacer5(),
               Text(
                 "Brand: ${homeDataController.productList[position].brand?.name.toString()}",
-                style: TextStyle(
+                style: const TextStyle(
                     fontSize: 16.0,
                     fontWeight: FontWeight.w600,
                     color: Colors.black),
               ),
               VSpacer5(),
               Text(
-                "${homeDataController.productList[position].description.toString()}",
-                style: TextStyle(
+                homeDataController.productList[position].description.toString(),
+                style: const TextStyle(
                     fontSize: 14.0,
                     fontWeight: FontWeight.w600,
                     color: Colors.black),
