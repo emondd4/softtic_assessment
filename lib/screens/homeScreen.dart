@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -140,7 +142,7 @@ class _HomePageState extends State<HomePage> {
                     )),
               ),
               VSpacer10(),
-              Center(child: Image.asset(AppImageUtils.instance.shopImage,height: 128,width: 128,)),
+              Center(child: Image.file(File(homeDataController.productList[position].image.toString()),height: 128,width: 128,)),
               VSpacer10(),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,

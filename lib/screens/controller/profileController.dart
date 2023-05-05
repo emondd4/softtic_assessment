@@ -1,4 +1,6 @@
 import 'package:get/get.dart';
+import 'package:softtic_assessment/screens/loginScreen.dart';
+import 'package:softtic_assessment/utils/shared_pref_utils.dart';
 import '../../dataModel/ProfileBaseResponse.dart';
 import '../../network/api_repository.dart';
 import '../../utils/app_common_util.dart';
@@ -50,6 +52,11 @@ class ProfileController extends GetxController{
         isDataLoading(false);
       }
     });
+  }
+
+  void logout() async {
+    await SharedPrefUtil.writeString("isLoggedIn", "");
+    Get.offAll(() => const LoginPage());
   }
 
 }

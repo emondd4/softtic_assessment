@@ -159,7 +159,31 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                 ),
               ),
-              VSpacer5(),
+              VSpacer40(),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(20.0,5.0,20.0,5.0),
+                child: InkWell(
+                  onTap: () {
+                    profileController.logout();
+                  },
+                  child: Container(
+                    height: 43.0,
+                    width: MediaQuery.of(context).size.width,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10.0),
+                        color: AppColorUtils.instance.yellow
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(Icons.logout,color: Colors.black,),
+                        HSpacer10(),
+                        Text("Logout", style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w600, color: Colors.black),),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
             ],
           ),
         ),

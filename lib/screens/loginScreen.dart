@@ -84,7 +84,7 @@ class _LoginPageState extends State<LoginPage> {
                     child: InkWell(
                       onTap: () {
                         setState(() {
-                          loginController.validateRequest(userController.text,passController.text);
+                          loginController.validateRequest(userController.text.trim(),passController.text);
                         });
                       },
                       child: Container(
