@@ -1,16 +1,13 @@
-import 'package:get/get.dart';
+import 'package:dio/dio.dart';
+import 'package:get/get.dart' hide Response;
 import 'package:softtic_assessment/dataModel/ProductListBaseResponse.dart';
-
-import '../../network/api_repository.dart';
-import '../../utils/app_common_util.dart';
-import '../../utils/app_ui_utils.dart';
+import 'package:softtic_assessment/network/api_urls.dart';
+import 'package:softtic_assessment/utils/shared_pref_utils.dart';
 
 class HomeDataController extends GetxController {
 
-  ProductListBaseResponse? productListBaseResponse;
-
-  final ApiRepository _apiRepository = ApiRepository();
-
+  late List<ProductListBaseResponse> productList;
+  var isDataLoading = false.obs;
 
   @override
   Future<void> onInit() async {
@@ -34,30 +31,21 @@ class HomeDataController extends GetxController {
       "size":20,
     };
 
-    CommonUtil.instance.internetCheck().then((value) async {
-      if (value) {
-        UIUtil.instance.showLoading();
-        _apiRepository.getProductList(Get.context, params, null,
-            onSuccess: (List<ProductListBaseResponse> response) async {
-              UIUtil.instance.stopLoading();
-              if (response != null) {
-                if (response.isNotEmpty == true) {
+    try {
+      isDataLoading(true);
+      final dio = Dio();
+      dio.options.headers["authorization"]="Bearer ${await SharedPrefUtil.getString("isLoggedIn")}";
+      Response response = await dio.get(ApiUrls.baseUrl+ApiUrls.productList,queryParameters: params);
+        productList = (response.data as List)
+          .map((x) => ProductListBaseResponse.fromJson(x))
+          .toList();
+       // print("ProductList ${productList.length}");
+    } catch (error, stacktrace) {
+      throw Exception("Exception : $error stackTrace: $stacktrace");
+    }finally{
+      isDataLoading(false);
+    }
 
-                } else {
-                  UIUtil.instance.onFailed("Failed to Fetch Products");
-                }
-              } else {
-                UIUtil.instance.onFailed('Fetch Product Failed');
-              }
-            }, onFailure: (String error) {
-              UIUtil.instance.stopLoading();
-              UIUtil.instance.onFailed('Something Went Wrong');
-            });
-      } else {
-        UIUtil.instance.stopLoading();
-        UIUtil.instance.onNoInternet();
-      }
-    });
   }
 
 }

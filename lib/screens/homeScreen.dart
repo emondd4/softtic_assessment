@@ -70,15 +70,21 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
               ),
-              GridView.builder(
+              Obx(() => homeDataController.isDataLoading.value == false
+                  ? GridView.builder(
                 physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
                     childAspectRatio: 1 / 1.52
-                  ),
+                ),
                 itemBuilder: (context,position) => productItem(position),
-                itemCount: 10,
+                itemCount: homeDataController.productList.length,
+              )
+                  : Container(
+                    height: CommonUtil.instance.getScreenHeight(context),
+                  child: Center(child: CircularProgressIndicator(color: AppColorUtils.instance.yellow,))
+              ) 
               )
             ],
           ),
@@ -125,14 +131,14 @@ class _HomePageState extends State<HomePage> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "Stock: 2",
+                    "Stock: ${homeDataController.productList[position].quantity?.quantity.toString()}",
                     style: TextStyle(
                         fontSize: 18.0,
                         fontWeight: FontWeight.w600,
                         color: Colors.black),
                   ),
                   Text(
-                    "\$ 15",
+                    "\$ ${homeDataController.productList[position].productPrice?.price.toString()}",
                     style: TextStyle(
                         fontSize: 18.0,
                         fontWeight: FontWeight.w600,
@@ -142,7 +148,7 @@ class _HomePageState extends State<HomePage> {
               ),
               VSpacer10(),
               Text(
-                "Product Name",
+                "${homeDataController.productList[position].name.toString()}",
                 style: TextStyle(
                     fontSize: 18.0,
                     fontWeight: FontWeight.w600,
@@ -150,7 +156,7 @@ class _HomePageState extends State<HomePage> {
               ),
               VSpacer5(),
               Text(
-                "Brand: Fuck",
+                "Brand: ${homeDataController.productList[position].brand?.name.toString()}",
                 style: TextStyle(
                     fontSize: 16.0,
                     fontWeight: FontWeight.w600,
@@ -158,7 +164,7 @@ class _HomePageState extends State<HomePage> {
               ),
               VSpacer5(),
               Text(
-                "Product Description",
+                "${homeDataController.productList[position].description.toString()}",
                 style: TextStyle(
                     fontSize: 14.0,
                     fontWeight: FontWeight.w600,
