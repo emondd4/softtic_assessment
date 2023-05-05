@@ -190,8 +190,26 @@ class _AddProductPageState extends State<AddProductPage> {
                               addProductController.imageDialog();
                            },
                            child: Obx(() => addProductController.isImagePicked == true
-                               ? Center(child: Image.file(addProductController.imagePath!,height: 150,width: 120,),)
-                               : Center(child: Image.asset(AppImageUtils.instance.placeholderImage,height: 100,width: 120,))
+                               ? Center(
+                                 child: Container(
+                             height: 120,
+                                   width: 100,
+                                   child: Stack(children: [
+                                     Positioned(child: Image.file(addProductController.imagePath!,height: 150,width: 120,),top: 0,bottom: 0,left: 0,right: 0,),
+                                     Positioned(child: Icon(Icons.add,color: Colors.red,),bottom: 5,right: 5,)
+                           ],),
+                                 ),
+                               )
+                               : Center(
+                                 child: Container(
+                             height: 120,
+                                   width: 100,
+                                   child: Stack(children: [
+                                     Positioned(child: Image.asset(AppImageUtils.instance.placeholderImage,height: 100,width: 120,),top: 0,bottom: 0,left: 0,right: 0,),
+                                     Positioned(child: Icon(Icons.add,color: Colors.yellow,size: 36,),bottom: 15,right: -5,)
+                                   ],),
+                                 ),
+                               )
                            ),
                          ),
 
