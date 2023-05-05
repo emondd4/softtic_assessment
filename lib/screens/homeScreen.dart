@@ -1,0 +1,174 @@
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:lottie/lottie.dart';
+import 'package:softtic_assessment/screens/controller/homeController.dart';
+import 'package:softtic_assessment/screens/profileScreen.dart';
+import 'package:softtic_assessment/utils/AppColorUtils.dart';
+import 'package:softtic_assessment/utils/AppImageUitls.dart';
+
+import '../utils/app_common_util.dart';
+import '../utils/spacers.dart';
+
+class HomePage extends StatefulWidget {
+  const HomePage({Key? key}) : super(key: key);
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+
+  HomeDataController homeDataController = Get.put(HomeDataController());
+
+  @override
+  Widget build(BuildContext context) {
+
+    return SafeArea(
+        child: Scaffold(
+      body: Container(
+        color: Colors.white,
+        height: CommonUtil.instance.getScreenHeight(context),
+        width: CommonUtil.instance.getScreenWidth(context),
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Container(
+                height: 85.0,
+                decoration: BoxDecoration(
+                    borderRadius: const BorderRadius.only(
+                        bottomLeft: Radius.circular(25.0),
+                        bottomRight: Radius.circular(25.0)),
+                    color: AppColorUtils.instance.yellow),
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 10.0, right: 10.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Lottie.asset(AppImageUtils.instance.homeAnim,
+                          repeat: true, height: 56.0, width: 56.0),
+                      const Text(
+                        "Softic Assessment",
+                        style: TextStyle(
+                            fontSize: 22.0,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.black),
+                      ),
+                      InkWell(
+                        onTap: () {
+                          Get.to(() => const ProfilePage());
+                        },
+                        child: Image.asset(
+                          AppImageUtils.instance.userImage,
+                          height: 32.0,
+                          width: 32.0,
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+              GridView.builder(
+                physics: const NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    childAspectRatio: 1 / 1.52
+                  ),
+                itemBuilder: (context,position) => productItem(position),
+                itemCount: 10,
+              )
+            ],
+          ),
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        backgroundColor: AppColorUtils.instance.yellow,
+        child: Icon(
+          Icons.add,
+          color: Colors.black,
+        ),
+      ),
+    ));
+  }
+
+  Widget productItem(int position){
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10.0),
+          color: AppColorUtils.instance.fadeYellow,
+        ),
+        child: Padding(
+          padding: const EdgeInsets.only(left: 8.0,right: 8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              VSpacer10(),
+              Align(
+                alignment: Alignment.centerRight,
+                child: InkWell(
+                  onTap: () {
+
+                  },
+                    child: Icon(Icons.delete,color: Colors.black,size: 28,)
+                ),
+              ),
+              VSpacer10(),
+              Center(child: Image.asset(AppImageUtils.instance.shopImage,height: 128,width: 128,)),
+              VSpacer10(),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Stock: 2",
+                    style: TextStyle(
+                        fontSize: 18.0,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.black),
+                  ),
+                  Text(
+                    "\$ 15",
+                    style: TextStyle(
+                        fontSize: 18.0,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.black),
+                  ),
+                ],
+              ),
+              VSpacer10(),
+              Text(
+                "Product Name",
+                style: TextStyle(
+                    fontSize: 18.0,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.black),
+              ),
+              VSpacer5(),
+              Text(
+                "Brand: Fuck",
+                style: TextStyle(
+                    fontSize: 16.0,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.black),
+              ),
+              VSpacer5(),
+              Text(
+                "Product Description",
+                style: TextStyle(
+                    fontSize: 14.0,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.black),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+}
